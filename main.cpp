@@ -19,73 +19,87 @@ struct GasValues {};
 // Define values for Air
 template<>
 struct GasValues<GasType::Air> {
-    static constexpr int a = 10000;
-    static constexpr int b = 10000;
+    static constexpr uint64_t a = 10000ULL;
+    static constexpr uint64_t b = 10000ULL;
 };
-
 template<>
 struct GasValues<GasType::Nitrox> {
-    static constexpr int a = 12599;
-    static constexpr int b = 8624;
+    static constexpr uint64_t a = 12599ULL;
+    static constexpr uint64_t b = 8624ULL;
 };
 
 template<>
 struct GasValues<GasType::Helium> {
-    static constexpr int a = 8618;
-    static constexpr int b = 11430;
+    static constexpr uint64_t a = 8618ULL;
+    static constexpr uint64_t b = 11430ULL;
 };
 
-template<typename T, GasType Gas>
+template<GasType Gas>
 class BuhlmannZHL16C {
 private:
-    const int M = 8333;  // Represents the value 1/120 (minutes to seconds conversion)
-    const int RG = 5000; // Represents the value 1/200 (cm to meters conversion)
+    const uint64_t M = 8333ULL;  // Represents the value 1/120 (minutes to seconds conversion)
+    const uint64_t RG = 5000ULL; // Represents the value 1/200 (cm to meters conversion)
 
     // Define half-time values for the tissue compartments
-    std::vector<int> halfTimes = {200, 500, 1000, 2000, 4000, 8000};
+    std::vector<uint64_t> halfTimes = {200, 500, 1000, 2000, 4000, 8000};
     // Half-time values correspond to theoretical tissue compartments in the human body.
     // They represent the time required for a compartment to reach half saturation or desaturation.
     // The values are in seconds and represent tissue compartments with half-times of 2, 5, 10, 20, 40, and 80 minutes respectively.
 
 public:
     // Constructor initializes half-times vector
-    BuhlmannZHL16C() {
+    BuhlmannZHL16C(): halfTimes {200ULL, 500ULL, 1000ULL, 2000ULL, 4000ULL, 8000ULL} {
         // No additional code needed here
     }
 
-    template<typename U>
-    char calculatePressureGroup(int depth, int time) {
-        char initialPressureGroup = 'A';
+    uint64_t calculateNDL(uint64_t depth) {
+        auto maxNDL = UINT64_MAX; // Initialize with a large value
 
-        int a = GasValues<Gas>::a;
-        int b = GasValues<Gas>::b;
+        for (size_t i = 0; i < halfTimes.size(); ++i) {
+
+            // Calculate the NDL based on Bühlmann formula
+            uint64_t NDL = ((GasValues<Gas>::a * depth * RG) / halfTimes[i]) - M;
+
+            // Update max NDL if a lower value is found
+            if (NDL < maxNDL) {
+                maxNDL = NDL;
+            }
+        }
+
+        return maxNDL;
+    }
+
+    uint16_t calculatePressureGroup(uint64_t depth, uint64_t time) {
+        uint16_t group = 0;
 
         // Loop through the half-times
         for (size_t i = 0; i < halfTimes.size(); ++i) {
-            int halfTime = halfTimes[i];
 
-            int gradient = (depth * RG / halfTime) - (depth * RG / time);
+            auto gradient = (depth * RG / halfTimes[i]) - (depth * RG / time);
 
             // Check if gradient meets criteria for pressure group change
-            if (gradient <= (a * time)) {
-                initialPressureGroup = 'A' + i;
+            if (gradient <= (GasValues<Gas>::a * time)) {
+                group = i;
                 break;
             }
         }
 
-        return initialPressureGroup;
+        return group;
     }
 };
 
 int main() {
-    BuhlmannZHL16C<int, GasType::Nitrox> model;
+    BuhlmannZHL16C<GasType::Nitrox> model;
 
-    int depth = 3000; // Depth in centimeters
-    int time = 1800;  // Time in seconds
+    auto depth = 3000ULL; // Depth in centimeters
+    auto time = 3600ULL;  // Time in seconds
 
-    char pressureGroup = model.calculatePressureGroup(depth, time);
+    auto pressureGroup = model.calculatePressureGroup(depth, time);
+
+    auto ndl = model.calculateNDL(depth);
 
     std::cout << "Initial Pressure Group: " << pressureGroup << std::endl;
+    std::cout << "No-Decompression Limit: " << ndl << std::endl;
 
     return 0;
 }
