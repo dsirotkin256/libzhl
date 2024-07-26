@@ -1,6 +1,27 @@
 # libzhl
 
-The ZHL Bühlmann algorithm is a decompression model employs theoretical tissue compartments and gas exchange dynamics to calculate safe ascent profiles, accommodating various gas mixtures as the ambient pressure changes.
+The ZHL Bühlmann algorithm is a decompression model that simulates theoretical gas exchange dynamics in various body tissue compartments (connective tissue, epithelial tissue, muscle tissue, and nervous tissue) under elevated ambient pressure, enabling the calculation of optimal decompression times ($`\Delta{t}`$) in response to pressure gradients ($`\nabla{P}`$) for different gas mixtures.
+
+The gas exchange dynamics in each tissue compartment are modeled using the following differential equation:
+```math
+\frac{dP}{dt} = \frac{P_{amb} - P}{\tau}
+```
+
+where $`P`$ is the partial pressure of the gas in the tissue compartment, $`P_{amb}`$ is the ambient pressure, and $`\tau`$ is the time constant for gas exchange in the tissue compartment.
+
+The decompression time ($`\Delta{t}`$) is calculated using the following equation:
+```math
+\partial t = \frac{\Delta P}{\nabla P}
+```
+
+where $`\Delta{P}`$ is the change in pressure and $`\nabla{P}`$ is the pressure gradient.
+
+The pressure gradient ($`\nabla{P}`$) is calculated using the following equation:
+```math
+\nabla P = \frac{P_{amb} - P}{d}
+```
+
+where $`d`$ is the distance between the tissue compartment and the ambient pressure.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/c48b1abd-a247-4a28-9be8-d7285a8e1ba7" />
@@ -46,13 +67,13 @@ Underlying model assumes no hazardous properties of Helium under high ambient pr
 
 # DISCLAIMER
 
-**WARNING**: USE OF THIS LIBRARY FOR SCUBA/TECHNICAL DIVING MAY CAUSE HEALTH PROBLEMS OR DEATH
+**WARNING**: USE OF THIS LIBRARY FOR UNDERWATER DIVING MAY CAUSE HEALTH PROBLEMS OR DEATH
 
-The use of this library for scuba/technical diving is strictly prohibited. The calculations and algorithms used in this library are not intended for use in life-critical applications, including scuba/technical diving.
+The use of this library for underwater diving is strictly prohibited. The calculations and algorithms used in this library are not intended for use in life-critical applications, including underwater diving.
 
-## RISKS ASSOCIATED WITH SCUBA/TECHNICAL DIVING
+## RISKS ASSOCIATED WITH UNDERWATER DIVING
 
-Scuba/technical diving is a high-risk activity that can result in serious health problems or death. The use of this library for scuba/technical diving may increase the risk of:
+underwater diving is a high-risk activity that can result in serious health problems or death. The use of this library for underwater diving may increase the risk of:
 
 - Decompression sickness (DCS)
 - Nitrogen narcosis
@@ -62,20 +83,20 @@ Scuba/technical diving is a high-risk activity that can result in serious health
 
 ## LIMITATIONS OF THIS LIBRARY
 
-This library is not designed to provide a safe or reliable means of calculating dive plans or managing gas mixtures for scuba/technical diving. The calculations and algorithms used in this library are based on simplified models and assumptions that may not accurately reflect the complexities of real-world diving scenarios.
+This library is not designed to provide a safe or reliable means of calculating dive plans or managing gas mixtures for underwater diving. The calculations and algorithms used in this library are based on simplified models and assumptions that may not accurately reflect the complexities of real-world diving scenarios.
 
 ## USER RESPONSIBILITY
 
-By using this library, you acknowledge that you understand the risks associated with scuba/technical diving and that you are responsible for ensuring your own safety and the safety of others. You also acknowledge that you have read and understood the warnings and disclaimers provided in this document.
+By using this library, you acknowledge that you understand the risks associated with underwater diving and that you are responsible for ensuring your own safety and the safety of others. You also acknowledge that you have read and understood the warnings and disclaimers provided in this document.
 
 ## NO WARRANTY OR LIABILITY
 
-The authors and maintainers of this library disclaim any warranty or liability for damages or injuries resulting from the use of this library for scuba/technical diving. By using this library, you release and hold harmless the authors and maintainers of this library from any claims or liabilities arising from the use of this library.
+The authors and maintainers of this library disclaim any warranty or liability for damages or injuries resulting from the use of this library for underwater diving. By using this library, you release and hold harmless the authors and maintainers of this library from any claims or liabilities arising from the use of this library.
 
 ## RECOMMENDATIONS
 
-If you are a scuba/technical diver, we strongly recommend that you use a reputable and safety-tested dive planning software or consult with a qualified diving professional to ensure your safety and the safety of others.
+If you are a underwater diver, we strongly recommend that you use a reputable and safety-tested dive planning software or consult with a qualified diving professional to ensure your safety and the safety of others.
 
 ## ACKNOWLEDGMENT
 
-By using this library, you acknowledge that you have read and understood the warnings and disclaimers provided in this document and that you are aware of the risks associated with scuba/technical diving.
+By using this library, you acknowledge that you have read and understood the warnings and disclaimers provided in this document and that you are aware of the risks associated with underwater diving.
