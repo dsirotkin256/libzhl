@@ -2,6 +2,10 @@
 
 The ZHL Bühlmann algorithm is a decompression model employs theoretical tissue compartments and gas exchange dynamics to calculate safe ascent profiles, accommodating various gas mixtures as the ambient pressure changes.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c48b1abd-a247-4a28-9be8-d7285a8e1ba7" />
+</p>
+
 
 ## Optimal gas mixture
 
