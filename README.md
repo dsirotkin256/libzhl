@@ -5,13 +5,13 @@ The ZHL Bühlmann algorithm is a decompression model employs theoretical tissue 
 
 ## Optimal gas mixture
 
-The model is based on the Dalton's Law in combination with Partial Pressures constraint optimisation  on the ressure limits recommended in the **US Navy Diving Manual (Revision 7, 2020)**:
+The model is based on the Dalton's Law in combination with Partial Pressures **constraint optimisation*  on the ressure limits recommended in the **US Navy Diving Manual (Revision 7, 2020)**:
 
-- PP02 (21278 Pa, 141855 Pa) - to eliminate O2 toxicity under high ambient pressure.
-- PPN2 (0 Pa, 354638 Pa) - to amortise N2 narcotic effect under high ambient pressure.
+- PP02 (21,278 Pa - 141,855 Pa) - to eliminate O2 toxicity under high ambient pressure.
+- PPN2 (0 Pa - 354,638 Pa) - to amortise N2 narcotic effect under high ambient pressure.
 
 **WARNING:**
-Underlying model assumes no hazrdious properties of Heleum under high ambient pressures:
+Underlying model assumes no hazrdious properties of Helium under high ambient pressures:
 - PPHe (0 Pa, ∞ Pa)
 
 ```bash
