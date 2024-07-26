@@ -4,24 +4,23 @@ The ZHL Bühlmann algorithm is a decompression model that simulates theoretical 
 
 The gas exchange dynamics in each tissue compartment are modeled using the following differential equation:
 ```math
-\frac{dP}{dt} = \frac{P_{amb} - P}{\tau}
+\frac{\Delta{P}}{\Delta{t}} = \frac{P_{amb} - P}{\tau}
 ```
-
 where $`P`$ is the partial pressure of the gas in the tissue compartment, $`P_{amb}`$ is the ambient pressure, and $`\tau`$ is the time constant for gas exchange in the tissue compartment.
 
 The decompression time ($`\Delta{t}`$) is calculated using the following equation:
 ```math
-\partial t = \frac{\Delta P}{\nabla P}
+\partial t = \frac{\Delta{P}}{\nabla{P}}
 ```
 
 where $`\Delta{P}`$ is the change in pressure and $`\nabla{P}`$ is the pressure gradient.
 
 The pressure gradient ($`\nabla{P}`$) is calculated using the following equation:
 ```math
-\nabla P = \frac{P_{amb} - P}{d}
+\nabla P = \frac{\Delta{P}}{\Delta{t}}
 ```
 
-where $`d`$ is the distance between the tissue compartment and the ambient pressure.
+This equation represents the rate of change of pressure $`\Delta{P}`$ with respect to time $`\Delta{t}`$.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/c48b1abd-a247-4a28-9be8-d7285a8e1ba7" />
