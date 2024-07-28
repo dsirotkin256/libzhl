@@ -1,6 +1,3 @@
-#include <iostream>
-#include <cmath>
-
 /*
 
 (A. A. Bühlmann, 1983, p. 14)
@@ -14,15 +11,9 @@ P_i(t_N) = P_i(t_0)  + [P_i.in- P_i(t_0)] x [1 - e^(-k x t_N)] or [1 - e^(-0.693
 - k is the natural logarithm of 2, 0.69315, divided by the half-value time.
 */
 
-// Constants
-const double M0 = 1.6; // initial M-value
-const double tau0 = 2.0; // initial half-time
-const double GF_LOW = 0.3; // low gradient factor
-const double GF_HIGH = 0.8; // high gradient factor
-
 // Function to calculate excess gas load (EGL)
-double calculateEGL(double P, double P0, double t) {
-  return (P - P0) * (1 - (t / tau0));
+double calculateEGL(double P, double P0, double t, double tau) {
+  return (P - P0) * (1 - (t / tau));
 }
 
 // Function to calculate half-time (tau)
@@ -50,14 +41,14 @@ double calculateDT(double DS, double GF, double tau) {
   return (DS / GF) * (1 - (tau0 / tau));
 }
 
-
+// Main function
 int main() {
   double P = 20.0; // current pressure (bar)
   double P0 = 10.0; // initial pressure (bar)
   double t = 30.0; // time (minutes)
 
-  double EGL = calculateEGL(P, P0, t);
   double tau = calculateTau(P, P0);
+  double EGL = calculateEGL(P, P0, t, tau);
   double M = calculateM(EGL, tau);
   double DS = calculateDS(EGL, M, tau);
   double GF = calculateGF(M, M0, tau);
