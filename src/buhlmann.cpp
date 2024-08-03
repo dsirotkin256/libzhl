@@ -1,15 +1,18 @@
-#include <iostream>
 #include "constants.hpp"
 #include "gas_exchange.hpp"
+#include <iostream>
 
 /*
 
 (A. A. Bühlmann, 1983, p. 14)
 
-P_i(t_N) = P_i(t_0)  + [P_i.in- P_i(t_0)] x [1 - e^(-k x t_N)] or [1 - e^(-0.69315 x t_N/2t)].
+P_i(t_N) = P_i(t_0)  + [P_i.in- P_i(t_0)] x [1 - e^(-k x t_N)] or [1 -
+e^(-0.69315 x t_N/2t)].
 
-- P_i(t_N) is the pressure of the inert gas in the tissue at the end of the exposure,
-- P_i(t_0) is the pressure of the inert gas in the tissue at the beginning of the exposure,
+- P_i(t_N) is the pressure of the inert gas in the tissue at the end of the
+exposure,
+- P_i(t_0) is the pressure of the inert gas in the tissue at the beginning of
+the exposure,
 - P_i.in is the pressure of the inert gas in inspiration,
 - e is the base of natural logarithms, 2.71828 ... ;
 - k is the natural logarithm of 2, 0.69315, divided by the half-value time.
@@ -21,14 +24,10 @@ double calculateEGL(double P, double P0, double t, double tau) {
 }
 
 // Function to calculate half-time (tau)
-double calculateTau(double P, double P0) {
-  return tau0 * (P / P0);
-}
+double calculateTau(double P, double P0) { return tau0 * (P / P0); }
 
 // Function to calculate M-value (M)
-double calculateM(double EGL, double tau) {
-  return M0 * (1 - (EGL / tau));
-}
+double calculateM(double EGL, double tau) { return M0 * (1 - (EGL / tau)); }
 
 // Function to calculate decompression stop (DS)
 double calculateDS(double EGL, double M, double tau) {
@@ -47,9 +46,9 @@ double calculateDT(double DS, double GF, double tau) {
 
 // Main function
 int main() {
-  double P = 20.0; // current pressure (bar)
+  double P = 20.0;  // current pressure (bar)
   double P0 = 10.0; // initial pressure (bar)
-  double t = 30.0; // time (minutes)
+  double t = 30.0;  // time (minutes)
 
   double tau = calculateTau(P, P0);
   double EGL = calculateEGL(P, P0, t, tau);
@@ -57,7 +56,6 @@ int main() {
   double DS = calculateDS(EGL, M, tau);
   double GF = calculateGF(M, M0, tau);
   double DT = calculateDT(DS, GF, tau);
-
 
   std::cout << "Excess gas load (EGL): " << EGL << " bar" << std::endl;
   std::cout << "Half-time (tau): " << tau << " minutes" << std::endl;
