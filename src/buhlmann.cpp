@@ -1,3 +1,7 @@
+#include <iostream>
+#include "constants.hpp"
+#include "gas_exchange.hpp"
+
 /*
 
 (A. A. Bühlmann, 1983, p. 14)
@@ -53,6 +57,7 @@ int main() {
   double DS = calculateDS(EGL, M, tau);
   double GF = calculateGF(M, M0, tau);
   double DT = calculateDT(DS, GF, tau);
+
 
   std::cout << "Excess gas load (EGL): " << EGL << " bar" << std::endl;
   std::cout << "Half-time (tau): " << tau << " minutes" << std::endl;

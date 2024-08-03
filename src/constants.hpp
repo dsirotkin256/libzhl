@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <cmath>
 
 using volume_t = double_t;
 using pressure_t = double_t;
@@ -14,6 +15,7 @@ const pressure_t PPN2_MIN_LIMIT_PA = 0;
 const pressure_t PPN2_MAX_LIMIT_PA = 354638;
 const pressure_t PPHE_MIN_LIMIT_PA = 0;
 const pressure_t STANDARD_ATMOSPHERIC_PA = 101325;
+const pressure_t CO2_PRESSURE_PA = 5340;
 const volume_t MAX_VOLUME_RATIO = 1;
 
 const double M0 = 1.6; // initial M-value

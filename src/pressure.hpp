@@ -64,10 +64,12 @@ struct pressure {
     }
 };
 
+const pressure STANDARD_ATMOSPHERIC_PRESSURE {STANDARD_ATMOSPHERIC_PA, pressure_unit::PA};
+
 const pressure PPO2_MIN_LIMIT_PRESSURE {PPO2_MIN_LIMIT_PA, pressure_unit::PA};
 const pressure PPO2_MAX_LIMIT_PRESSURE {PPO2_MAX_LIMIT_PA, pressure_unit::PA};
 const pressure PPN2_MIN_LIMIT_PRESSURE {PPN2_MIN_LIMIT_PA, pressure_unit::PA}; 
 const pressure PPN2_MAX_LIMIT_PRESSURE {PPN2_MAX_LIMIT_PA, pressure_unit::PA};
 const pressure PPHE_MIN_LIMIT_PRESSURE {PPHE_MIN_LIMIT_PA, pressure_unit::PA};
 
-const pressure STANDARD_ATMOSPHERIC_PRESSURE {STANDARD_ATMOSPHERIC_PA, pressure_unit::PA};
+const pressure CO2_PRESSURE {CO2_PRESSURE_PA, pressure_unit::PA};

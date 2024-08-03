@@ -2,6 +2,7 @@
 #include <algorithm>
 #include "constants.hpp"
 #include "pressure.hpp"
+#include "gas_exchange.hpp"
 
 
 struct gas_mixture {
@@ -30,17 +31,18 @@ struct gas_mixture {
 };
 
 int main() {
+    const pressure vapour{0.0627, pressure_unit::ATA};
 
     for (pressure_t p = 1; p <= 10; p += 0.5) {
-        const pressure ambient {pressure_t(p), pressure_unit::ATA};
+        const pressure amb {pressure_t(p), pressure_unit::ATA};
 
-        gas_mixture trimix(ambient);
+        gas_mixture trimix(amb);
 
-        std::cout << ambient << '\n'
+        std::cout << amb << '\n'
             << trimix << '\n'
-            << "PPO2 " << ambient.partial_pressure(trimix._O2) << ", "
-            << "PPN2 " << ambient.partial_pressure(trimix._N2) << ", "
-            << "PPHe " << ambient.partial_pressure(trimix._He) << "\n\n";
+            << "PPO2 " << amb.partial_pressure(trimix._O2) << ", "
+            << "PPN2 " << amb.partial_pressure(trimix._N2) << ", "
+            << "PPHe " << amb.partial_pressure(trimix._He) << "\n\n";
     }
 
     return 0;
