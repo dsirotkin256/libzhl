@@ -25,12 +25,12 @@ set_target_properties(sat PROPERTIES LINKER_LANGUAGE CXX)
 include(FetchContent)
 include(ExternalProject)
 
-FetchContent_Declare(
-        spdlog
-        GIT_REPOSITORY https://github.com/gabime/spdlog
-        GIT_TAG        v1.14.1
-)
-FetchContent_MakeAvailable(spdlog)
+# FetchContent_Declare(
+#         spdlog
+#         GIT_REPOSITORY https://github.com/gabime/spdlog
+#         GIT_TAG        v1.14.1
+# )
+# FetchContent_MakeAvailable(spdlog)
 
 # FetchContent_Declare(
 #         fmt
@@ -52,12 +52,12 @@ set(MI_BUILD_SHARED OFF CACHE INTERNAL "Disable shared mimalloc")
 set(MI_BUILD_TESTS OFF CACHE INTERNAL "Disable mimalloc tests")
 set(MI_USE_LIBATOMIC OFF CACHE INTERNAL "Disable libatomic")
 
-FetchContent_Declare(
-        mimalloc
-        GIT_REPOSITORY https://github.com/microsoft/mimalloc
-        GIT_TAG        v1.7.9
-)
-FetchContent_MakeAvailable(mimalloc)
+# FetchContent_Declare(
+#         mimalloc
+#         GIT_REPOSITORY https://github.com/microsoft/mimalloc
+#         GIT_TAG        v1.7.9
+# )
+# FetchContent_MakeAvailable(mimalloc)
 
 IF(NOT DEFINED ENV{CROSS_CXX})
         set(ENV{CROSS_CXX} $ENV{CXX})
@@ -68,8 +68,8 @@ ENDIF()
 
 target_link_libraries(sat
         PUBLIC
-        mimalloc-static
-        spdlog
+        # mimalloc-static
+        # spdlog
         )
 
 add_executable(partial partial_pressure.cpp)

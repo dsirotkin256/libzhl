@@ -14,7 +14,7 @@ struct gas_mixture {
       Mixture calibration:
       - Compensate N2 and O2 with He based on safety constraints
    */
-  gas_mixture(const pressure &ambient)
+  explicit gas_mixture(const pressure &ambient)
       : _ambient{ambient},
         _O2{std::min(
                 PPO2_MAX_LIMIT_PRESSURE.to_ata(),
@@ -37,10 +37,10 @@ struct gas_mixture {
 int main() {
   const pressure vapour{0.0627, pressure_unit::ATA};
 
-  for (pressure_t p = 1; p <= 10; p += 0.5) {
+  for (int p = 1; p <= 10; ++p) {
     const pressure amb{pressure_t(p), pressure_unit::ATA};
 
-    gas_mixture trimix(amb);
+    const gas_mixture trimix(amb);
 
     std::cout << amb << '\n'
               << trimix << '\n'

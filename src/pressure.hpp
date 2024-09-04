@@ -30,16 +30,20 @@ struct pressure {
     return {lhs.to_pascal() + rhs.to_pascal(), pressure_unit::PA};
   }
 
-  pressure operator/(const pressure &rhs) const {
-    return {to_pascal() / rhs.to_pascal(), pressure_unit::PA};
+  friend pressure operator/(const pressure &lhs, const pressure &rhs) {
+    return {lhs.to_pascal() / rhs.to_pascal(), pressure_unit::PA};
   }
 
-  pressure operator*(const pressure &rhs) const {
-    return {to_pascal() * rhs.to_pascal(), pressure_unit::PA};
+  friend pressure operator*(const pressure &lhs, const pressure &rhs) {
+    return {lhs.to_pascal() * rhs.to_pascal(), pressure_unit::PA};
   }
 
-  friend bool operator<=(const pressure &lhs, const pressure &rhs) {
-    return lhs.to_pascal() <= rhs.to_pascal();
+  friend auto operator<=>(const pressure &lhs, const pressure &rhs) {
+    if (lhs.to_pascal() < rhs.to_pascal())
+      return std::strong_ordering::less;
+    if (lhs.to_pascal() > rhs.to_pascal())
+      return std::strong_ordering::greater;
+    return std::strong_ordering::equal;
   }
 
   friend std::ostream &operator<<(std::ostream &os, const pressure &p) {
@@ -71,4 +75,4 @@ const pressure PPN2_MIN_LIMIT_PRESSURE{PPN2_MIN_LIMIT_PA, pressure_unit::PA};
 const pressure PPN2_MAX_LIMIT_PRESSURE{PPN2_MAX_LIMIT_PA, pressure_unit::PA};
 const pressure PPHE_MIN_LIMIT_PRESSURE{PPHE_MIN_LIMIT_PA, pressure_unit::PA};
 
-const pressure CO2_PRESSURE{CO2_PRESSURE_PA, pressure_unit::PA};
+const pressure CO2_PRESSURE{PPCO2_MAX_LIMIT_PA, pressure_unit::PA};

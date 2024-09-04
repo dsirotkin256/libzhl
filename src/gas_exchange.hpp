@@ -1,10 +1,9 @@
 #pragma once
 
-#include "constants.hpp"
 #include "pressure.hpp"
 
 /*
-    Alveolar gas equation
+Alveolar gas equation
 */
 
 pressure alv(const pressure &amb, const pressure &H2O_vapour, const double_t rq,
