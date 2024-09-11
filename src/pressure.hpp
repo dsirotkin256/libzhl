@@ -1,5 +1,6 @@
 #pragma once
 #include "constants.hpp"
+#include <format>
 #include <iostream>
 
 enum class pressure_unit { PA, ATA };
@@ -63,6 +64,16 @@ struct pressure {
 
   pressure partial_pressure(const volume_t gasVol) const {
     return pressure{gasVol * _value, _unit};
+  }
+};
+
+template <> struct std::formatter<pressure> : std::formatter<std::string_view> {
+  template <typename Context>
+  auto format(const pressure &p, Context &ctx) const {
+    return formatter<std::string_view>::format(
+        std::format("{} {}", p._value,
+                    (p._unit == pressure_unit::PA ? " Pa" : " ATA")),
+        ctx);
   }
 };
 

@@ -1,8 +1,9 @@
 #include "constants.hpp"
-#include "gas_exchange.hpp"
 #include "pressure.hpp"
 #include <algorithm>
+#include <format>
 #include <iostream>
+#include <string_view>
 
 struct gas_mixture {
   pressure _ambient;
@@ -25,12 +26,13 @@ struct gas_mixture {
                      MAX_VOLUME_RATIO - _O2)},
         _He{std::max(MAX_VOLUME_RATIO - _O2 - _N2,
                      PPHE_MIN_LIMIT_PRESSURE.to_ata())} {}
-
-  friend std::ostream &operator<<(std::ostream &os,
-                                  const gas_mixture &mixture) {
-    return os << "VO2 " << mixture._O2 << ", "
-              << "VN2 " << mixture._N2 << ", "
-              << "VHe " << mixture._He;
+};
+template <>
+struct std::formatter<gas_mixture> : std::formatter<std::string_view> {
+  template <typename Context>
+  auto format(const gas_mixture &m, Context &ctx) const {
+    return formatter<std::string_view>::format(
+        std::format("VO2 {}, VN2 {}, VHe {}", m._O2, m._N2, m._He), ctx);
   }
 };
 
@@ -41,12 +43,11 @@ int main() {
     const pressure amb{pressure_t(p), pressure_unit::ATA};
 
     const gas_mixture trimix(amb);
-
-    std::cout << amb << '\n'
-              << trimix << '\n'
-              << "PPO2 " << amb.partial_pressure(trimix._O2) << ", "
-              << "PPN2 " << amb.partial_pressure(trimix._N2) << ", "
-              << "PPHe " << amb.partial_pressure(trimix._He) << "\n\n";
+    const auto ppO2 = amb.partial_pressure(trimix._O2);
+    const auto ppN2 = amb.partial_pressure(trimix._N2);
+    const auto ppHe = amb.partial_pressure(trimix._He);
+    std::cout << std::format("{}\n{}\nPPO2 {}, PPN2 {}, PPHe {}\n\n", amb,
+                             trimix, ppO2, ppN2, ppHe);
   }
 
   return 0;

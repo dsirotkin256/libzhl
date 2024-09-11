@@ -1,5 +1,5 @@
 #include "constants.hpp"
-#include "gas_exchange.hpp"
+#include <cmath>
 #include <iostream>
 
 /*
@@ -19,43 +19,45 @@ the exposure,
 */
 
 // Function to calculate excess gas load (EGL)
-double calculateEGL(double P, double P0, double t, double tau) {
+auto calculateEGL(const double P, const double P0, const double t, double tau) {
   return (P - P0) * (1 - (t / tau));
 }
 
 // Function to calculate half-time (tau)
-double calculateTau(double P, double P0) { return tau0 * (P / P0); }
+auto calculateTau(const double P, const double P0) { return tau0 * (P / P0); }
 
 // Function to calculate M-value (M)
-double calculateM(double EGL, double tau) { return M0 * (1 - (EGL / tau)); }
+auto calculateM(const double EGL, const double tau) {
+  return M0 * (1 - (EGL / tau));
+}
 
 // Function to calculate decompression stop (DS)
-double calculateDS(double EGL, double M, double tau) {
+auto calculateDS(const double EGL, const double M, const double tau) {
   return (EGL / M) * (1 - (tau / tau0));
 }
 
 // Function to calculate gradient factor (GF)
-double calculateGF(double M, double M0, double tau) {
+auto calculateGF(const double M, const double tau) {
   return (M / M0) * (1 - (tau0 / tau));
 }
 
 // Function to calculate decompression time (DT)
-double calculateDT(double DS, double GF, double tau) {
+auto calculateDT(const double DS, const double GF, const double tau) {
   return (DS / GF) * (1 - (tau0 / tau));
 }
 
 // Main function
 int main() {
-  double P = 20.0;  // current pressure (bar)
-  double P0 = 10.0; // initial pressure (bar)
-  double t = 30.0;  // time (minutes)
+  const pressure_t P = 20.0;  // current pressure (bar)
+  const pressure_t P0 = 10.0; // initial pressure (bar)
+  const double_t t = 30.0;    // time (minutes)
 
-  double tau = calculateTau(P, P0);
-  double EGL = calculateEGL(P, P0, t, tau);
-  double M = calculateM(EGL, tau);
-  double DS = calculateDS(EGL, M, tau);
-  double GF = calculateGF(M, M0, tau);
-  double DT = calculateDT(DS, GF, tau);
+  const double tau = calculateTau(P, P0);
+  const double EGL = calculateEGL(P, P0, t, tau);
+  const double M = calculateM(EGL, tau);
+  const double DS = calculateDS(EGL, M, tau);
+  const double GF = calculateGF(M, tau);
+  const double DT = calculateDT(DS, GF, tau);
 
   std::cout << "Excess gas load (EGL): " << EGL << " bar" << std::endl;
   std::cout << "Half-time (tau): " << tau << " minutes" << std::endl;

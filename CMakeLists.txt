@@ -18,8 +18,8 @@ else()
     message(SEND_ERROR "cppcheck not found, cannot run static code analysis")
 endif()
 
-add_compile_options(-fsanitize=leak -fno-omit-frame-pointer -fno-optimize-sibling-calls)
-add_link_options(-fsanitize=leak -fno-omit-frame-pointer -fno-optimize-sibling-calls)
+add_compile_options(-fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls -fwrapv)
+add_link_options(-fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls -fwrapv)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
